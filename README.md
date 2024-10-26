@@ -1112,8 +1112,6 @@ SELECT * FROM aluno;
 
 
 
-
-
 #### 7.4.6 - Vantagens do MERGE
 - **Eficiência**: Reduz a necessidade de múltiplos comandos (INSERT, UPDATE, DELETE).
 - **Legibilidadev: Agrupa operações relacionadas em uma única instrução.
@@ -1126,3 +1124,300 @@ SELECT * FROM aluno;
 
 
 ## 8 - DQL - Data Query Language
+O comando SELECT é o principal comando da DQL (Data Query Language), utilizado para **consultar dados** de uma ou mais tabelas em um banco de dados. Com ele, você pode recuperar colunas específicas, filtrar, ordenar e agrupar dados, realizar junções (joins) e usar subconsultas.
+
+### Operadores Relacionais e Lógicos
+- igual = 
+- maior > 
+- menor < 
+- maior ou igual >= 
+- menor ou igual <= 
+- diferente <>
+- AND E
+- OR ou
+- NOT Não (Negação)
+
+### 8.1 - Sintaxe Básica do SELECT
+```
+SELECT colunas 
+FROM tabela 
+[WHERE condição]
+[GROUP BY colunas]
+[HAVING condição]
+[ORDER BY colunas]
+[LIMIT n OFFSET m];
+```
+
+#### 8.1.2 - Selecionando Todas as Colunas de uma Tabela
+```
+SELECT * FROM aluno;
+```
+Retorna todos os registros e todas as colunas da tabela aluno.
+
+
+#### 8.1.3 - Selecionando Colunas Específicas
+```
+SELECT nome, idade FROM aluno;
+```
+Retorna somente as colunas nome e idade da tabela aluno.
+
+
+#### 8.1.4 - Filtrando Registros com WHERE
+```
+SELECT nome 
+FROM aluno 
+WHERE idade > 20;
+```
+Retorna os nomes dos alunos com idade maior que 20.
+
+#### 8.1.5 - Ordenando os Resultados com ORDER BY
+- **ASC (Padrão)**: crescente
+- **DESC**: decrescente
+```
+SELECT nome, idade 
+FROM aluno 
+ORDER BY idade DESC;
+```
+Retorna os alunos ordenados por idade de forma decrescente.
+
+#### 8.1.6 - Removendo Duplicatas com DISTINCT
+```
+SELECT DISTINCT curso 
+FROM aluno;
+```
+Retorna apenas os cursos únicos da tabela aluno, eliminando duplicatas.
+
+
+#### 8.1.7 - Limitando Registros com LIMIT
+```
+SELECT * 
+FROM aluno 
+LIMIT 2;
+```
+Retorna apenas os primeiros 2 registros.
+
+
+#### 8.1.8 - Selecionando Registros com IN
+```
+SELECT nome 
+FROM aluno 
+WHERE curso IN ('Matemática', 'Física');
+```
+Retorna os nomes dos alunos que estão matriculados em Matemática ou Física.
+
+
+#### 8.1.9 - Usando BETWEEN/NOT BETWEEN para Intervalos
+```
+SELECT nome, idade 
+FROM aluno 
+WHERE idade BETWEEN 18 AND 21;
+```
+Retorna alunos cuja idade está entre 18 e 21 anos, inclusive.
+
+
+#### 8.1.10 - Consultando com Padrões usando LIKE
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE 'A%';
+```
+Retorna os nomes que começam com a letra 'A'.
+
+
+#### 8.1.11 - Selecionando com Subconsulta no WHERE
+```
+SELECT nome 
+FROM aluno 
+WHERE idade = (SELECT MAX(idade) FROM aluno);
+```
+Retorna o nome do aluno com a maior idade. 
+
+
+#### 8.1.12 - Agrupando Registros com GROUP BY
+```
+SELECT curso, COUNT(*) AS total_alunos 
+FROM aluno 
+GROUP BY curso;
+```
+Retorna o número de alunos por curso.
+
+- **Exemplo de Resultado**:
+| curso | total_alunos | 
+| ---------- | ----------- |
+|  Matemática | 1 |
+|  Física | 1 | 
+| Química | 1 | 
+
+
+#### 8.1.13 - Filtrando Grupos com HAVING
+```
+SELECT curso, COUNT(*) AS total_alunos 
+FROM aluno 
+GROUP BY curso 
+HAVING COUNT(*) > 1;
+```
+- Retorna apenas os cursos que têm mais de 1 aluno matriculado.
+- **Exemplo de Resultado**: (Nenhum registro retornado, pois cada curso tem apenas um aluno).
+
+
+### 8.2 - LIKE
+Aqui estão exemplos detalhados do uso do LIKE em SQL, que é utilizado para filtros de padrão em consultas. O LIKE é útil quando você precisa procurar por registros que correspondem a um padrão parcial, usando caracteres curingas como % e _.
+
+#### 8.2.1 - Sintaxe do LIKE
+```
+SELECT colunas 
+FROM tabela 
+WHERE coluna LIKE 'padrão';
+```
+
+#### 8.2.2 - Curingas no LIKE
+- **%**: Substitui zero ou mais caracteres.
+- **_**: Substitui exatamente um caractere.
+
+
+#### 8.2.3 - Encontrando Nomes que Começam com uma Letra
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE 'A%';
+```
+Retorna todos os nomes que começam com a letra 'A'.
+
+
+#### 8.2.4 - Encontrando Nomes que Terminam com uma Letra
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE '%a';
+```
+Retorna todos os nomes que terminam com a letra 'a'.
+
+
+#### 8.2.5 - Encontrando Nomes que Contêm uma Substring
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE '%ar%';
+```
+Retorna todos os nomes que contêm a sequência 'ar' em qualquer posição.
+
+
+#### 8.2.6 - Usando o Curinga _ para Substituir um Único Caractere
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE 'A_a';
+```
+Retorna todos os nomes que começam com 'A', terminam com 'a', e têm exatamente um caractere entre eles.
+
+
+#### 8.2.7 - Usando NOT LIKE para Excluir Padrões
+```
+SELECT nome 
+FROM aluno 
+WHERE nome NOT LIKE '%a';
+```
+Retorna todos os nomes que não terminam com a letra 'a'.
+
+
+#### 8.2.8 - LIKE com Caracteres de Escape
+Se o padrão contiver caracteres especiais como % ou _, você pode usar ESCAPE para tratar esses símbolos literalmente.
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE '50\%' ESCAPE '\';
+```
+Retorna nomes que contêm literalmente o texto '50%'.
+
+
+#### 8.2.9 - LIKE com Subconsulta
+```
+SELECT nome 
+FROM aluno 
+WHERE nome LIKE (SELECT CONCAT(nome_inicial, '%') FROM cursos WHERE id = 1);
+```
+Usa uma subconsulta para gerar dinamicamente o padrão a ser comparado.
+
+
+### 8.3 - Funções de Agregação
+
+#### 8.3.1 - Usando SUM() para Somar Valores
+```
+SELECT SUM(salario) AS total_salarios 
+FROM funcionario;
+```
+Calcula a soma dos salários de todos os funcionários.
+
+#### 8.3.2 - Calculando a Média com AVG()
+```
+SELECT AVG(idade) AS media_idade 
+FROM aluno;
+```
+Retorna a média das idades dos alunos.
+
+#### 8.3.3 - Contando Registros com COUNT()
+- Conta o número total de registros na tabela aluno.
+```
+SELECT COUNT(*) AS total_alunos 
+FROM aluno;
+```
+
+- Conta apenas os alunos que têm o campo curso não nulo.
+```
+SELECT COUNT(curso) AS alunos_com_curso 
+FROM aluno;
+```
+
+
+#### 8.3.4 - Encontrando o Valor Máximo com MAX()
+```
+SELECT MAX(salario) AS maior_salario 
+FROM funcionario;
+```
+Retorna o maior salário entre os funcionários.
+
+
+#### 8.3.5 - Encontrando o Valor Mínimo com MIN()
+```
+SELECT MIN(idade) AS menor_idade 
+FROM aluno;
+```
+Retorna a menor idade entre os alunos.
+
+
+#### 8.3.6 - Usando Funções de Agregação com GROUP BY
+```
+SELECT curso, COUNT(*) AS total_alunos 
+FROM aluno 
+GROUP BY curso;
+```
+Retorna o número de alunos por curso.
+
+
+#### 8.3.7 - Filtrando Resultados com HAVING
+```
+SELECT curso, COUNT(*) AS total_alunos 
+FROM aluno 
+GROUP BY curso 
+HAVING COUNT(*) > 2;
+```
+Retorna apenas os cursos que têm mais de 2 alunos matriculados.
+
+
+#### 8.3.8 - Combinando Funções de Agregação - Exemplo com SUM() e AVG()
+```
+SELECT SUM(salario) AS total_salarios, AVG(salario) AS media_salario 
+FROM funcionario;
+```
+Retorna a soma total dos salários e a média salarial dos funcionários.
+
+
+#### 8.3.9 - Usando COUNT(DISTINCT)
+```
+SELECT COUNT(DISTINCT curso) AS cursos_unicos 
+FROM aluno;
+```
+Conta o número de cursos únicos na tabela (tira duplicatas).
+
+
+### 8.4 - JOIN
