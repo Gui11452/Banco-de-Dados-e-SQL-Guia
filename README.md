@@ -10,7 +10,7 @@
 7. [DML - Data Manipulation Language](#7---dml---data-manipulation-language)
 8. [DQL - Data Query Language](#8---dql---data-query-language)
 
-- 8-1 [Sintaxe Basica do SELECT](#8-1---sintaxe-basica-select)
+- 8-1 [Sintaxe Basica do SELECT](#8-1---sintaxe-basica-do-select)
 - 8-2 [LIKE](#8-2---like)
 - 8-3 [Funcoes de Agregacao](#8-3---funcoes-de-agregacao)
 - 8-4 [Funcoes Escalares](#8-4---funcoes-escalares)
