@@ -10,6 +10,14 @@
 7. [DML - Data Manipulation Language](#7---dml---data-manipulation-language)
 8. [DQL - Data Query Language](#8---dql---data-query-language)
 
+- 8.1 [Sintaxe Basica do SELECT](#8.1---sintaxe-basica-select)
+- 8.2 [LIKE](#8.2---like)
+- 8.3 [Funcoes de Agregacao](#8.3---funcoes-de-agregacao)
+- 8.4 [Funcoes Escalares](#8.4---funcoes-escalares)
+- 8.5 [Funcoes Matematicas](#8.5---funcoes-matematicas)
+- 8.6 [Funcoes de Data e Hora](#8.6---funcoes-de-data-e-hora)
+    
+
 
 ## 1 - Tipos de Linguagem
 
@@ -1137,7 +1145,7 @@ O comando SELECT é o principal comando da DQL (Data Query Language), utilizado 
 - OR ou
 - NOT Não (Negação)
 
-### 8.1 - Sintaxe Básica do SELECT
+### 8.1 - Sintaxe Basica do SELECT
 ```
 SELECT colunas 
 FROM tabela 
@@ -1339,7 +1347,7 @@ WHERE nome LIKE (SELECT CONCAT(nome_inicial, '%') FROM cursos WHERE id = 1);
 Usa uma subconsulta para gerar dinamicamente o padrão a ser comparado.
 
 
-### 8.3 - Funções de Agregação
+### 8.3 - Funcoes de Agregacao
 
 #### 8.3.1 - Usando SUM() para Somar Valores
 ```
@@ -1420,4 +1428,109 @@ FROM aluno;
 Conta o número de cursos únicos na tabela (tira duplicatas).
 
 
-### 8.4 - JOIN
+### 8.4 - Funcoes Escalares
+
+
+Funções Escalares
+Essas funções operam em cada linha individualmente e retornam um valor para cada linha.
+
+#### 8.4.1 - UPPER() e LOWER(): Convertem strings para maiúsculas ou minúsculas.
+```
+SELECT UPPER(nome) FROM clientes;
+```
+
+#### 8.4.2 - LENGTH(): Retorna o comprimento de uma string.
+```
+SELECT LENGTH(nome) FROM clientes;
+```
+
+#### 8.4.3 - ROUND(): Arredonda um número para um número específico de casas decimais.
+```
+SELECT ROUND(preco, 2) FROM produtos;
+```
+
+#### 8.4.4 - NOW(): Retorna a data e hora atual.
+```
+SELECT NOW();
+```
+
+#### 8.4.5 - DATEDIFF(): Calcula a diferença em dias entre duas datas.
+```
+SELECT DATEDIFF(data_final, data_inicial) FROM projetos;
+```
+
+#### 8.5 - Funcoes Matematicas
+Essas funções lidam com cálculos matemáticos em SQL.
+
+#### 8.5.1 - ABS(): Retorna o valor absoluto de um número.
+```
+SELECT ABS(-10);
+```
+
+#### 8.5.2 - POWER(): Calcula a potência de um número.
+```
+SELECT POWER(base, expoente) FROM tabela;
+```
+
+#### 8.5.3 - SQRT(): Retorna a raiz quadrada de um número.
+```
+SELECT SQRT(16);
+```
+
+#### 8.5.4 - ROUND() e CEILING()/FLOOR(): Arredondam um número para cima ou para baixo.
+```
+SELECT ROUND(quantidade, 2) FROM produtos;
+SELECT CEILING(quantidade) FROM produtos;
+```
+
+#### 8.6 - Funcoes de Data e Hora
+Essas funções trabalham com valores de data e hora, permitindo cálculos e manipulações de datas.
+
+#### 8.6.1 - TO_DATE
+A função TO_DATE em SQL é usada para converter uma string em uma data no formato especificado. É útil quando você tem valores de data como texto e precisa convertê-los para o tipo de dados DATE para facilitar cálculos, ordenação ou comparações.
+
+#### Sintaxe Básica
+```
+TO_DATE('string_data', 'formato')
+```
+- **string_data**: A string que representa a data.
+- **formato**: O formato da data que a string segue. Esse formato pode incluir padrões como YYYY (ano com quatro dígitos), MM (mês), DD (dia), entre outros.
+
+#### Exemplos de Uso
+Converter uma string para uma data específica:
+```
+SELECT TO_DATE('2024-10-31', 'YYYY-MM-DD') FROM dual;
+```
+#### Usando outro formato de data:
+```
+SELECT TO_DATE('31-10-2024', 'DD-MM-YYYY') FROM dual;
+```
+
+#### Usando TO_DATE para comparar datas:
+```
+SELECT * 
+FROM pedidos
+WHERE data_pedido = TO_DATE('2024-10-31', 'YYYY-MM-DD');
+```
+
+- **Nota**: TO_DATE é suportado principalmente pelo **Oracle SQL**. Em outras versões de SQL, como MySQL ou SQL Server, o uso de STR_TO_DATE (MySQL) ou CONVERT/CAST (SQL Server) pode ser necessário para conversões similares.
+
+#### 8.6.2 - CURRENT_DATE: Retorna a data atual.
+```
+SELECT CURRENT_DATE;
+```
+
+#### 8.6.3 - DATEADD(): Adiciona um valor específico a uma data.
+```
+SELECT DATEADD(day, 5, '2024-10-31');
+```
+
+#### 8.6.4 - DATEDIFF(): Calcula a diferença entre duas datas.
+```
+SELECT DATEDIFF(day, '2024-01-01', '2024-12-31');
+```
+
+#### 8.6.5 - EXTRACT(): Extrai uma parte específica de uma data, como o ano ou mês.
+```
+SELECT EXTRACT(year FROM data_nascimento) FROM usuarios;
+```
