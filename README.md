@@ -10,12 +10,12 @@
 7. [DML - Data Manipulation Language](#7---dml---data-manipulation-language)
 8. [DQL - Data Query Language](#8---dql---data-query-language)
 
-- 8.1 [Sintaxe Basica do SELECT](#8.1---sintaxe-basica-select)
-- 8.2 [LIKE](#8.2---like)
-- 8.3 [Funcoes de Agregacao](#8.3---funcoes-de-agregacao)
-- 8.4 [Funcoes Escalares](#8.4---funcoes-escalares)
-- 8.5 [Funcoes Matematicas](#8.5---funcoes-matematicas)
-- 8.6 [Funcoes de Data e Hora](#8.6---funcoes-de-data-e-hora)
+- 8-1 [Sintaxe Basica do SELECT](#8-1---sintaxe-basica-select)
+- 8-2 [LIKE](#8-2---like)
+- 8-3 [Funcoes de Agregacao](#8-3---funcoes-de-agregacao)
+- 8-4 [Funcoes Escalares](#8-4---funcoes-escalares)
+- 8-5 [Funcoes Matematicas](#8-5---funcoes-matematicas)
+- 8-6 [Funcoes de Data e Hora](#8-6---funcoes-de-data-e-hora)
     
 
 
@@ -1145,7 +1145,7 @@ O comando SELECT é o principal comando da DQL (Data Query Language), utilizado 
 - OR ou
 - NOT Não (Negação)
 
-### 8.1 - Sintaxe Basica do SELECT
+### 8-1 - Sintaxe Basica do SELECT
 ```
 SELECT colunas 
 FROM tabela 
@@ -1268,7 +1268,7 @@ HAVING COUNT(*) > 1;
 - **Exemplo de Resultado**: (Nenhum registro retornado, pois cada curso tem apenas um aluno).
 
 
-### 8.2 - LIKE
+### 8-2 - LIKE
 Aqui estão exemplos detalhados do uso do LIKE em SQL, que é utilizado para filtros de padrão em consultas. O LIKE é útil quando você precisa procurar por registros que correspondem a um padrão parcial, usando caracteres curingas como % e _.
 
 #### 8.2.1 - Sintaxe do LIKE
@@ -1347,7 +1347,7 @@ WHERE nome LIKE (SELECT CONCAT(nome_inicial, '%') FROM cursos WHERE id = 1);
 Usa uma subconsulta para gerar dinamicamente o padrão a ser comparado.
 
 
-### 8.3 - Funcoes de Agregacao
+### 8-3 - Funcoes de Agregacao
 
 #### 8.3.1 - Usando SUM() para Somar Valores
 ```
@@ -1428,7 +1428,7 @@ FROM aluno;
 Conta o número de cursos únicos na tabela (tira duplicatas).
 
 
-### 8.4 - Funcoes Escalares
+### 8-4 - Funcoes Escalares
 
 
 Funções Escalares
@@ -1459,7 +1459,7 @@ SELECT NOW();
 SELECT DATEDIFF(data_final, data_inicial) FROM projetos;
 ```
 
-#### 8.5 - Funcoes Matematicas
+#### 8-5 - Funcoes Matematicas
 Essas funções lidam com cálculos matemáticos em SQL.
 
 #### 8.5.1 - ABS(): Retorna o valor absoluto de um número.
@@ -1483,7 +1483,7 @@ SELECT ROUND(quantidade, 2) FROM produtos;
 SELECT CEILING(quantidade) FROM produtos;
 ```
 
-#### 8.6 - Funcoes de Data e Hora
+#### 8-6 - Funcoes de Data e Hora
 Essas funções trabalham com valores de data e hora, permitindo cálculos e manipulações de datas.
 
 #### 8.6.1 - TO_DATE
